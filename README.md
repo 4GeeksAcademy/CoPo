@@ -12,4 +12,4 @@ Solution: An application that matches 2 or more users based off the show season 
 
 Future Updates:
 
-App iNtegrated with faceboook for reward system when sharing.
+App integrated with faceboook for reward system when sharing. Will also consider instagram.
