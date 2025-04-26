@@ -17,3 +17,15 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+
+
+class Favorites(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    show: Mapped[str] = mapped_column(String(50), unique=False, nullable=True)
+  
+
+    def serialize(self):
+        return {
+            "show": self.show  
+         }

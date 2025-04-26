@@ -5,10 +5,10 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 export const Home = () => {
 
 	const { store, dispatch } = useGlobalReducer()
+	const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 	const loadMessage = async () => {
 		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
 
@@ -31,6 +31,11 @@ export const Home = () => {
 	useEffect(() => {
 		// loadMessage()
 	}, [])
+
+
+		const favorites = () => {
+
+	}
 
 	return (
 		<div className="text-center mt-5">
