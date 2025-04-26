@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import String, Boolean, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
 
@@ -25,10 +25,24 @@ class User(db.Model):
 
 class Favorites(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    show: Mapped[str] = mapped_column(String(50), unique=False, nullable=True)
+    show = relationship("Show",backref="favorites")
+
   
 
     def serialize(self):
         return {
-            "show": self.show  
+            "id": self.id,
+            "show": [item.showTitle for item in self.show] 
          }
+    
+
+class Show(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    showTitle: Mapped[str] = mapped_column(String(50), unique=False, nullable=True)
+    favoriteId: Mapped[int] = mapped_column(ForeignKey("favorites.id"))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "showTitle": self.showTitle  
+            }
