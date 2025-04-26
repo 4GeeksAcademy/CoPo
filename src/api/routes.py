@@ -30,3 +30,23 @@ def post_show():
     db.session.commit()
     
     return jsonify("SHOW CREATED"), 200
+
+
+    
+@api.route('/signup', methods=['POST'])
+def signup():
+    email = request.json.get("email")
+    password = request.json.get("password")
+    name = request.json.get("name")
+    age = request.json.get("age")
+
+    new_signup = User (
+        email = email, 
+        password = password, 
+        name = name, 
+        age = age, 
+    )
+    db.session.add(new_signup)
+    db.session.commit()
+
+    return jsonify("user signedup"), 200
