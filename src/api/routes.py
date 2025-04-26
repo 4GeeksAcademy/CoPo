@@ -16,9 +16,16 @@ CORS(api)
 def signup():
     email = request.json.get("email")
     password = request.json.get("password")
-    first_name = request.json.get("first_name")
-    last_name = request.json.get("last_name")
-    birthday = request.json.get("birthday")
+    name = request.json.get("name")
+    age = request.json.get("age")
 
+    new_signup = User (
+        email = email, 
+        password = password, 
+        name = name, 
+        age = age, 
+    )
+    db.session.add(new_signup)
+    db.session.commit()
 
     return jsonify("user signedup"), 200
