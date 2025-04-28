@@ -7,6 +7,7 @@ db = SQLAlchemy()
 # will need a relationship and table name for the user object in the favorites model
 
 class User(db.Model):
+    __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
@@ -25,8 +26,9 @@ class User(db.Model):
 
 
 class Favorites(db.Model):
+    __tablename__ = "favorites"
     id: Mapped[int] = mapped_column(primary_key=True)
-    # user:
+    user: Mapped[str] = mapped_column(String(50), unique=False, nullable=True)
     show = relationship("Show",backref="favorites")
 
   
@@ -34,18 +36,23 @@ class Favorites(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "user":self.user,
             "show": [item.showTitle for item in self.show] 
          }
     
 
 class Show(db.Model):
+    __tablename__ = "show"
     id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id")) #ask about this
     showTitle: Mapped[str] = mapped_column(String(50), unique=False, nullable=True)
-    favoriteId: Mapped[int] = mapped_column(ForeignKey("favorites.id"))
+    favorites_id: Mapped[int] = mapped_column(ForeignKey("favorites.id")) #ask about this
+    user: Mapped["User"]=relationship("User")
+    favorites: Mapped["Favorites"]=relationship("Favorites")
 
     def serialize(self):
         return {
             "id": self.id,
             "showTitle": self.showTitle,
-            "favoriteId": self.favoriteId,
+            "favoriteId": self.favorites_id,
             }
