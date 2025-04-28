@@ -9,11 +9,12 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
-    name: Mapped[str] = mapped_column(String(120), nullable=False,unique=False)
-    age: Mapped[int] = mapped_column(nullable=False, unique= False)
-
+    name: Mapped[str] = mapped_column(
+        String(120), nullable=False, unique=False)
+    age: Mapped[int] = mapped_column(nullable=False, unique=False)
 
     def serialize(self):
         return {
@@ -31,14 +32,19 @@ class Favorites(db.Model):
     user: Mapped[str] = mapped_column(String(50), unique=False, nullable=True)
     show = relationship("Show",backref="favorites")
 
-  
-
     def serialize(self):
         return {
             "id": self.id,
             "user":self.user,
             "show": [item.showTitle for item in self.show] 
          }
+  
+class Login(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
+    password: Mapped[str] = mapped_column(String(20), nullable=False)
+
     
 
 class Show(db.Model):
