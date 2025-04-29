@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Favorites, Show
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from models import db, User, Favorites, Show
+
 
 api = Blueprint('api', __name__)
 
@@ -17,13 +17,13 @@ CORS(api)
 def post_show():
 
     showTitle = request.json.get('showTitle')
-    favoriteId = request.json.get('favoriteId')
+    favorite_id = request.json.get('favorite_id')
 
 
     new_show = Show (
 
         showTitle = showTitle,
-        favoriteId = favoriteId
+        favorite_id = favorite_id
 
     )
     
@@ -45,7 +45,7 @@ def signup():
         email = email, 
         password = password, 
         name = name, 
-        age = age, 
+        age = age
     )
     db.session.add(new_signup)
     db.session.commit()
@@ -54,12 +54,12 @@ def signup():
 
 
 # POST method for Favorites// still working on this... very similar to routes
-@app.route('/show', methods=['POST'])
+@api.route('/favorites', methods=['POST'])
 def post_favorites():
     data = request.json
-    new_show= Show(
+    new_favorite= Favorites(
         showTitle = data["showTitle"],
-        favorite_id = data["favorites_id"]
+        favorites_id = data["favorites_id"]
     )
     db.session.add(post_favorites)
     db.session.commit()

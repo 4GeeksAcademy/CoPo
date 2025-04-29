@@ -25,6 +25,12 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
+class Login(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
+    password: Mapped[str] = mapped_column(String(20), nullable=False)
+
 
 class Favorites(db.Model):
     __tablename__ = "favorites"
@@ -39,26 +45,19 @@ class Favorites(db.Model):
             "show": [item.showTitle for item in self.show] 
          }
   
-class Login(db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(
-        String(120), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(String(20), nullable=False)
-
-    
-
 class Show(db.Model):
     __tablename__ = "show"
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id")) #ask about this
     showTitle: Mapped[str] = mapped_column(String(50), unique=False, nullable=True)
     favorites_id: Mapped[int] = mapped_column(ForeignKey("favorites.id")) #ask about this
-    user: Mapped["User"]=relationship("User")
-    favorites: Mapped["Favorites"]=relationship("Favorites")
+
 
     def serialize(self):
         return {
             "id": self.id,
             "showTitle": self.showTitle,
-            "favoriteId": self.favorites_id,
+            "favorites_id": self.favorites_id
             }
+
+
+# create a favorite and 2 shows using postman 
