@@ -29,7 +29,7 @@ export const Profile = () => {
 	// added this for the search functionality
 	const [search, setSearch] = useState("");
 
-	const [episode, setEpisode] = useState("")
+	const [episode, setEpisode] = useState([])
 
 	const matchesSearch = (showList, search) => {
 		return showList.title.toLowerCase().includes(search.toLowerCase());
@@ -162,7 +162,10 @@ export const Profile = () => {
                 return resp.json()
             })
             .then((data) => {
-                console.log("episode list is here",data)
+                console.log("episode list is here",data);
+                if (data.episodes) {
+                    setEpisode(data.episodes);
+                }
             })
 			
 	}
@@ -171,6 +174,7 @@ export const Profile = () => {
 		getFavorites()
 		showListFetch()
 		getEpisodes()
+		getShowList()
 	}, [])
 
 	// this is used to render the shows in tandem with the get request 
@@ -187,25 +191,19 @@ export const Profile = () => {
 	// 		})
 	// }
 
-
-	useEffect(() =>{
-		getFavorites()
-		getShowList()
-	},[])
-
-
 	return (
-		<div className="text-center mt-5 d-inline bg-purple">
-			<h1 className="display-6 mt-5">Welcome, @Bianca_23</h1>
+		<div style={{ backgroundColor: '#B08EF3', padding: '1rem' }} className="vh-100">
+			{/* <h1 className="display-6 mt-5">Welcome, @Bianca_23</h1> */}
 			<p className="lead">
 				{/* <h1>Welcome, ${user}</h1>  will need to come back and update so it is personalized */}
 			</p>
 			<div>
-				<div className="d-inline-flex col-6"> 
-					<img src= {profileImageUrl} className="img-fluid rounded-circle mb-4 w-50" alt="User-Image" />
+				<div className="col-4 ">
+					<img src={profileImageUrl} className="img-fluid rounded-circle w-50 mb-5" alt="User-Image" />
 
 				</div>
-				<div className="d-inline-flex col-3 mt-4">
+			</div>
+			<div className="d-inline-flex col-12">
 				<div>
 					<h5 className="text-center">Favorite List</h5>
 					{fav.length > 0 ?
@@ -220,33 +218,60 @@ export const Profile = () => {
 									</ul>
 								</div>
 							)
-						}): (
-						<p className=" small text-black-50">please select your favorite shows</p>
-
-						)}
+						}) :
+						<p className=" small text-black-50">please select your favorite shows</p>}
 				</div>
-					<div className="d-inline-flex col-3 mt-4">
-					<div>
-						<h2 className="text-center mt-7 ">Show List</h2>
-						
-						{showList.length > 0 ? 
-						showList.map((show)=> {
-						return (
-							<div className="text-start">
-								<ul className="list-unstyled display-8">
-									<li className="m-1">
-										{show.showTitle}
-									</li>
-								</ul>
-							</div>
+
+
+				<div className="text-center col-8 mt-4">
+					<div className="">
+						<h2 className="text-center pb-5">What Are You Watching?</h2>
+						{/* search bar for shows */}
+						<div className="mx-auto col-4">
+							<form className="text-center d-flex" role="search">
+								<input
+									className="form-control me-2"
+									type="search"
+									placeholder="Search shows..."
+									aria-label="Search"
+									value={search}
+									onChange={(e) => setSearch(e.target.value)}
+								/>
+							
+								{/* <button className="btn btn-outline-primary" type="submit">
+									Search
+								</button> */}
+							</form>
+							{showList.length === 0 ?
+							  "Search Not Found. Please Try again.":
+								showList.map((show) => {
+									return (
+										<div className="text-start">
+											<ul className="list-unstyled display-8">
+												<li className="m-1">
+													{show.title}
+												</li>
+											</ul>
+										</div>
+
 									)
-								}): (
-									<p className="small text-black-50">No shows available.</p>
-								)}
+								})}
 						</div>
 					</div>
+			{/* //mapping for episode list goes in the div below */}
+					{/* <div>
+						{episodes.map(
+							()=>{
+								
+							}
+
+							)}
+
+					</div> */}
 				</div>
 			</div>
+		</div>
+	);
+};
 
-	)
-}
+// you'll need to find a way to set a condition to where if array is empty we see a string that say's "search not found. please try again" otherwise, it shows content.
