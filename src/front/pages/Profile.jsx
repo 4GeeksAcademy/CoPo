@@ -266,7 +266,8 @@ export const Profile = () => {
 												<li class="list-group-item col-4"
 												onClick={()=>
 													{setChatBox({title: season.name, id: season.id})}}
-													>
+													style={{ cursor: "pointer" }}
+													 >
 													{season.name}
 												</li>
 											</ul>
@@ -275,7 +276,7 @@ export const Profile = () => {
 								})}
 								{chatBox && <Chatdemo
 											chatName={chatBox.title}
-												rtKey={`chat-${chatBox.id}`}/>}
+												rtKey={`${chatBox.id}`}/>}
 
 					</div>
 				</div>
