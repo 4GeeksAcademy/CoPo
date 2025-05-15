@@ -32,6 +32,12 @@ export const Profile = () => {
 
 	const [episode, setEpisode] = useState("")
 
+
+	// card map use state to override 
+	const [label, setLabel] = useState([])
+
+	const [mapItem, setMapItem] = useState("")
+
 	const matchesSearch = (showList, search) => {
 		return showList.title.toLowerCase().includes(search.toLowerCase());
 	};
@@ -46,7 +52,8 @@ export const Profile = () => {
 				const arrayofMedia = data.titles
 				const onlyShows = arrayofMedia.filter((show) => show.type == "tv_series")
 				console.log(onlyShows, "HEREEEEEEEE")
-				setshowList(onlyShows)
+				setLabel(onlyShows)
+				setMapItem("show")
 			})
 			.catch((error) => {
 				console.log(error, "There was an error!!!")
@@ -57,14 +64,14 @@ export const Profile = () => {
 	//  meaning that only the title searched will be mapped.
 
 
-	const filteredShows = showList.filter(
+	const filteredShows = mapItem == "show" ? label.filter(
 		(show) => {
 			const showTitleLower = show.title.toLowerCase()
 			const searchLower = search.toLowerCase()
 			return showTitleLower.includes(searchLower)
 		}
 
-	);
+	) : [];
 
 
 	// added this becuase we want to render show season list
@@ -129,18 +136,19 @@ export const Profile = () => {
 
 	// adding to pull show seasons from api
 
+
 	const getSeasons=(id) => {
-		fetch(watchModeBase+"/title/3197275/seasons/?apiKey="+watchModeApi)
+		fetch(watchModeBase+"/title/"+ `${id}`+ "/seasons/?apiKey=" + watchModeApi)
 			.then((resp)=> {
 				return resp.json()
 			})
 
 			.then((data)=> {
-				setSeasons(data)
+				setLabel(data)
+				setMapItem("season")
 				console.log("SEASONSSSSSSS",data)
 			})
 	}
-// fetch(watchModeBase+ "/title/"+`${id}`+"/seasons/?apiKey=" + watchModeApi)
 
 
 	// below wokring on the code to render the episode list of the selected show season
@@ -163,6 +171,7 @@ export const Profile = () => {
 
 
 	return (
+		
 		<div style={{ backgroundColor: '#B08EF3', padding: '1rem' }} className="vh-100">
 		
 			<p className="lead">
@@ -207,16 +216,20 @@ export const Profile = () => {
 									placeholder="Search shows..."
 									aria-label="Search"
 									value={search}
-									onChange={(e) => setSearch(e.target.value)}
+									onChange={(e) => {
+									// setLabel(showList)	
+									setSearch(e.target.value)}
+							}
 								/>
 							
 								{/* <button className="btn btn-outline-primary" type="submit">
 									Search
 								</button> */}
 							</form>
-							{showList.length === 0 ?
+							{label.length === 0 ?
 							  "Search Not Found. Please Try again.":
-								showList.map((show) => {
+								mapItem == "show" ? 
+								filteredShows.map((show) => {
 									return (
 										<div className=" text-start">
 											<ul className="list-unstyled">
@@ -224,9 +237,18 @@ export const Profile = () => {
 													<Card
 													title={show.title} 
 													id={show.id}
-													
 													/>
 												</li>
+											</ul>
+										</div>
+									)
+								})
+								:
+								 label.map((season) => {
+								  return (
+									  <div className="text-start text-center">
+											<ul class="list-group d-flex align-items-center ">
+												<li class="list-group-item col-4">{season.name}</li>
 											</ul>
 										</div>
 									)
