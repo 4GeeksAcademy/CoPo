@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export const Navbar = () => {
 
 	return (
-		<nav className="navbar navbar-light bg-black p-3">
+		<nav className="navbar navbar-light bg-black">
 			<div className="container text-center ">
 				<div className="col-2">
 					<h3 style={{ color: 'white' }}>@TerryTango13</h3>

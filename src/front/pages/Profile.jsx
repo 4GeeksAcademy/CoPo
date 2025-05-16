@@ -174,7 +174,7 @@ export const Profile = () => {
 		
 		<div style={{ backgroundColor: '#B08EF3' }} className="container-fluid">
 		
-			<div className="row" height="800px">
+			<div className="row pt-5" height="800px">
 				<div className="col-2">
 					<div className=" d-inline-flex "> 
 							<img src= {profileImageUrl} className="img-fluid rounded-circle mb-4" width="200px" alt="User-Image" />
