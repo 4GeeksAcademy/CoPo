@@ -14,6 +14,7 @@ import { Profile } from "./pages/Profile";
 import { LoginPage } from "./pages/LoginPage";
 import { HomePage } from "./pages/HomePage";
 import { Chat } from "react-together";
+import Chatdemo from "./components/Chat";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -34,7 +35,7 @@ export const router = createBrowserRouter(
         <Route path="/profile" element={ <Profile />} />
         <Route path="/login" element={ <LoginPage />} />
         <Route path="/home" element={ <HomePage />} />
-        <Route path="/chat" element={ <Chat />} />
+        <Route path="/chat" element={ <Chatdemo />} />
       </Route>
     )
 );
