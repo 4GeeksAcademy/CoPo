@@ -197,15 +197,14 @@ export const Profile = () => {
 							<p className=" small text-black-50">please select your favorite shows</p>}
 					</div>
 				</div>
-			</div>
-				<div className="row text-center mb-5">
+				<div className="text-center col-8 align-self-end mt-5">
 					<div className="">
 						<img src={profilehero} className="img-fluid mb-5" width="100"/>
 					</div>
 					<div className="">
 						<h2 className="text-center mb-3"> What Are You Watching?</h2>
 						{/* search bar for shows */}
-							<form className="text-center d-flex mx-auto col-4" role="search">
+							<form className="text-center d-flex mx-auto col-6" role="search">
 								<input
 									className="form-control me-2"
 									type="search"
@@ -220,6 +219,7 @@ export const Profile = () => {
 							</form>
 					</div>
 				</div>
+			</div>
 				<div className="row">
 						<div className="row p-5">
 							{label.length === 0 ?
