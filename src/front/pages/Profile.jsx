@@ -161,7 +161,7 @@ export const Profile = () => {
 	}
 
 
-	// below wokring on the code to render the episode list of the selected show season
+	// below working on the code to render the episode list of the selected show season
         const getEpisodes = () => {
         	fetch(watchModeBase+ "/title/3196837/episodes/?apiKey="+ watchModeApi)
             .then((resp) => {
@@ -171,7 +171,7 @@ export const Profile = () => {
                 console.log("episode list is here",data)
             })
 			
-	// }
+	}
 
 	useEffect(() => {
 		getFavorites()
