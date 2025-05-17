@@ -262,6 +262,9 @@ export const Profile = () => {
 								  return (
 									  <div className="text-start text-center">
 											<ul class="list-group d-flex align-items-center ">
+												<li class="list-group-item col-4">
+												<button onClick="">Go Back</button>
+												{season.title}</li>
 												<li class="list-group-item col-4">{season.name}</li>
 											</ul>
 										</div>
