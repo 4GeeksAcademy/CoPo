@@ -145,7 +145,7 @@ export const Profile = () => {
 
 	// below wokring on the code to render the episode list of the selected show season
         const getEpisodes = () => {
-        	fetch(watchModeBase+ "/title/3197275/episodes/?apiKey="+ watchModeApi)
+        	fetch(watchModeBase+ "/title/3196837/episodes/?apiKey="+ watchModeApi)
             .then((resp) => {
                 return resp.json()
             })
