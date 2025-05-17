@@ -161,17 +161,17 @@ export const Profile = () => {
 	}
 
 
-	// below wokring on the code to render the episode list of the selected show season
-    //     const getEpisodes = () => {
-    //     	fetch(watchModeBase+ "/title/3197275/episodes/?apiKey="+ watchModeApi)
-    //         .then((resp) => {
-    //             return resp.json()
-    //         })
-    //         .then((data) => {
-    //             console.log("episode list is here",data)
-    //         })
+	// below working on the code to render the episode list of the selected show season
+        const getEpisodes = () => {
+        	fetch(watchModeBase+ "/title/3196837/episodes/?apiKey="+ watchModeApi)
+            .then((resp) => {
+                return resp.json()
+            })
+            .then((data) => {
+                console.log("episode list is here",data)
+            })
 			
-	// }
+	}
 
 	useEffect(() => {
 		getFavorites()

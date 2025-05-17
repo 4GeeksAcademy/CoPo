@@ -11,7 +11,6 @@ import { ReactTogether } from 'react-together'
 
 
 const Main = () => {
-    console.log(import.meta.env.VITE_API_KEY, "HERE IT ISSSS!!!")
     if(! import.meta.env.VITE_BACKEND_URL ||  import.meta.env.VITE_BACKEND_URL == "") return (
         <React.StrictMode>
               <BackendURL/ >
