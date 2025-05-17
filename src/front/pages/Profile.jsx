@@ -4,6 +4,9 @@ import star from "../assets/img/star.png";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import profilehero from "../assets/img/cute.png";
 import { Card } from "../components/Card.jsx";
+import Chatdemo from "../components/Chat.jsx";
+import { shows } from "../assets/Data/Shows.js";
+import { season } from "../assets/Data/Season.js";
 // import '../style.css';
 
 
@@ -18,6 +21,7 @@ export const Profile = () => {
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
 	const watchModeApi = import.meta.env.VITE_WATCHMODE_API_KEY
 
+	const [chatBox, setChatBox] = useState("")
 	// added this becuase we are filling the favorites object 
 	const [fav, setFav] = useState("");
 
@@ -30,22 +34,24 @@ export const Profile = () => {
 	// added this for the search functionality
 	const [search, setSearch] = useState("");
 
-	const [episode, setEpisode] = useState("")
-
-
 	// card map use state to override 
 	const [label, setLabel] = useState([])
 
 	const [mapItem, setMapItem] = useState("")
 
 	const matchesSearch = (showList, search) => {
+		console.log("matchesSearch")
 		return showList.title.toLowerCase().includes(search.toLowerCase());
 	};
 
 	const showListFetch = () => {
 		fetch(watchModeBase+"/list-titles/?apiKey="+watchModeApi+"&source_ids=203,57")
 			.then((resp) => {
-				return resp.json()
+				if (resp.ok == false){
+					return shows
+				} else {					
+					return resp.json()
+				}
 			})
 
 			.then((data) => {
@@ -64,7 +70,7 @@ export const Profile = () => {
 	//  meaning that only the title searched will be mapped.
 
 
-	const filteredShows = mapItem == "show" ? label.filter(
+	const filteredShows = mapItem == "show" && label.length > 0 ? label.filter(
 		(show) => {
 			const showTitleLower = show.title.toLowerCase()
 			const searchLower = search.toLowerCase()
@@ -140,7 +146,11 @@ export const Profile = () => {
 	const getSeasons=(id) => {
 		fetch(watchModeBase+"/title/"+ `${id}`+ "/seasons/?apiKey=" + watchModeApi)
 			.then((resp)=> {
-				return resp.json()
+				if (resp.ok == false){
+					return season
+				} else {					
+					return resp.json()
+				}
 			})
 
 			.then((data)=> {
@@ -152,21 +162,20 @@ export const Profile = () => {
 
 
 	// below wokring on the code to render the episode list of the selected show season
-        const getEpisodes = () => {
-        	fetch(watchModeBase+ "/title/3197275/episodes/?apiKey="+ watchModeApi)
-            .then((resp) => {
-                return resp.json()
-            })
-            .then((data) => {
-                console.log("episode list is here",data)
-            })
+    //     const getEpisodes = () => {
+    //     	fetch(watchModeBase+ "/title/3197275/episodes/?apiKey="+ watchModeApi)
+    //         .then((resp) => {
+    //             return resp.json()
+    //         })
+    //         .then((data) => {
+    //             console.log("episode list is here",data)
+    //         })
 			
-	}
+	// }
 
 	useEffect(() => {
 		getFavorites()
 		showListFetch()
-		getEpisodes()
 	}, [])
 
 
@@ -227,9 +236,11 @@ export const Profile = () => {
 							  mapItem == "show" ? 
 							  filteredShows.map((show) => {
 								  return (
-									  <div className="text-center col-md-2" width="">
+									  <div className="text-center col-2" width="">
 											<ul className="list-unstyled">
-												<li onClick={() => (getSeasons(show.id))} >
+												<li className="m-1"
+												onClick={() =>
+													(getSeasons(show.id))}>
 													<Card
 													title={show.title} 
 													id={show.id}
@@ -244,7 +255,13 @@ export const Profile = () => {
 									return (
 										<div className="text-start text-center">
 											<ul class="list-group d-flex align-items-center ">
-												<li class="list-group-item col-4">{season.name}</li>
+												<li class="list-group-item col-4"
+												onClick={()=>{ console.log("clicked")
+														setChatBox({title: season.name, id: season.id})
+													}
+												}
+													style={{ cursor: "pointer" }}
+												>{season.name}</li>
 											</ul>
 										</div>
 									)
@@ -252,29 +269,13 @@ export const Profile = () => {
 							</div>
 						</div>
 						<div>
-							{seasons.length === 0 ?
-							  "Seasons not found. Please Try again.":
-							  seasons.map((season) => {
-								  return (
-									  <div className="text-start text-center">
-											<ul class="list-group d-flex align-items-center ">
-												<li class="list-group-item col-4">{season.name}</li>
-											</ul>
-										</div>
-									)
-								})}
+					
+								{chatBox && <Chatdemo
+											title={chatBox.title}
+												id={`${chatBox.id}`}/>}
+
 					</div>
 				</div>
+		
 	);
 };
-
-
-
-
-
-
-
-
-
-
-
