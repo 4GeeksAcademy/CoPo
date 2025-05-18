@@ -1,4 +1,4 @@
-import React ,{ useEffect, useState } from "react";
+import React ,{ useEffect, useReducer, useState } from "react";
 import profileImageUrl from "../assets/img/roundpicture.png"; 
 import star from "../assets/img/star.png";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
@@ -15,7 +15,8 @@ import { season } from "../assets/Data/Season.js";
 
 export const Profile = () => {
 
-	const { store, dispatch } = useGlobalReducer()
+	const { store, dispatch } = useGlobalReducer(getFavorites, {favorites: [] } )
+													// ^__ need to fix this still
 	const backendUrl = import.meta.env.VITE_BACKEND_URL
 	const apiKey = import.meta.env.VITE_API_KEY
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
@@ -61,6 +62,7 @@ export const Profile = () => {
 				setLabel(onlyShows)
 				setMapItem("show")
 			})
+			// conditional that helps when api reached its limit
 			.catch((error) => {
 				console.log(error, "There was an error!!!")
 			})

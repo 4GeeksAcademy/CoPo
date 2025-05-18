@@ -10,6 +10,19 @@ export const Card = ({title,id,end}) => {
                         <h5 class="card-title">{title}</h5>
                         <p class="card-text">{}</p>
                         <a href="#" class="btn btn-primary">{end}</a>
+                       
+                       {/* dispatch: is like calling a helper and notifying of an update/add on 
+                       type: is saying put whatever is in here into my favorites box 
+                       payload: is saying to add this SHOW-TITLE to my favorites*/}
+                        <button
+                      onClick={() =>
+                        dispatch({ type: "my-likes", payload: show.title }) 
+                                                            // show.title is in profile.jsx line 250
+                      }
+                    >
+                      {" "}
+                      <i className="fa-solid fa-heart"> </i>{" "}
+                    </button>
                     </div>
             </div>
         </div>
