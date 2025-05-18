@@ -21,7 +21,7 @@ export const Profile = () => {
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
 	const watchModeApi = import.meta.env.VITE_WATCHMODE_API_KEY
 
-	const [chatBox, setChatBox] = useState("")
+	const [chatBox, setChatBox] = useState(null);
 	// added this becuase we are filling the favorites object 
 	const [fav, setFav] = useState("");
 
@@ -57,7 +57,6 @@ export const Profile = () => {
 			.then((data) => {
 				const arrayofMedia = data.titles
 				const onlyShows = arrayofMedia.filter((show) => show.type == "tv_series")
-				console.log(onlyShows, "HEREEEEEEEE")
 				setLabel(onlyShows)
 				setMapItem("show")
 			})
@@ -234,7 +233,7 @@ export const Profile = () => {
 							{label.length === 0 ?
 							  "Search Not Found. Please Try again.":
 							  mapItem == "show" ? 
-							  filteredShows.map((show) => {
+							  (filteredShows.map((show) => {
 								  return (
 									  <div className="text-center col-2" width="">
 											<ul className="list-unstyled">
@@ -249,33 +248,62 @@ export const Profile = () => {
 											</ul>
 										</div>
 									)
-								})
-								:
-								label.map((season) => {
+								}))
+								: (
+									<>
+
+												<div className="text-start text-center">
+												<ul className="list-group d-flex align-items-center">
+													<li
+													className="list-group-item col-4"
+													onClick={() => {
+														showListFetch();
+													
+													}}
+													style={{
+														cursor: "pointer",
+														fontWeight: "bold",
+														backgroundColor: "#f0f0f0",
+													}}
+													>
+													⬅ BACK TO SHOWS
+													</li>
+												</ul>
+												</div>
+
+								{label.map((season) => {
 									return (
 										<div className="text-start text-center">
-											<ul class="list-group d-flex align-items-center ">
+								
+											<ul className="list-group d-flex align-items-center ">
 												<li class="list-group-item col-4"
-												onClick={()=>{ console.log("clicked")
-														setChatBox({title: season.name, id: season.id})
+												onClick={()=>{console.log("clicked")
+														setChatBox({title: season.name, id: season.id});
 													}
 												}
 													style={{ cursor: "pointer" }}
 												>{season.name}</li>
 											</ul>
-										</div>
-									)
-								})}
-							</div>
-						</div>
-						<div>
-					
-								{chatBox && <Chatdemo
-											title={chatBox.title}
-												id={`${chatBox.id}`}/>}
 
-					</div>
+										</div>
+					
+									);
+								
+									})}
+								</>
+							)}
+							</div>
+				
+						<div>
+											{chatBox && 
+											
+											(<Chatdemo
+											title={chatBox.title}
+											id={`${chatBox.id}`}/>
+											)}
+
+						</div>
 				</div>
-		
+		</div>
 	);
 };
