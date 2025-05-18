@@ -13,7 +13,7 @@ export const HomePage = () => {
             </div>
             <div>
                 <h6>Reliving the good old shows is fun, but sharing the laughs, drama, and plot
-                    twits make it unfirgettable.
+                    twits make it unforgettable.
                 </h6>
             </div>
             <div>

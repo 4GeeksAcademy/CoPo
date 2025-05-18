@@ -4,7 +4,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link, useParams } from "react-router-dom";
 
 
-export const Home = () => {
+export const Signup = () => {
 
 	const { store, dispatch } = useGlobalReducer()
 	const [name, setName] = useState("")

@@ -4,6 +4,9 @@ import star from "../assets/img/star.png";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import profilehero from "../assets/img/cute.png";
 import { Card } from "../components/Card.jsx";
+import Chatdemo from "../components/Chat.jsx";
+import { shows } from "../assets/Data/Shows.js";
+import { season } from "../assets/Data/Season.js";
 // import '../style.css';
 
 
@@ -18,6 +21,7 @@ export const Profile = () => {
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
 	const watchModeApi = import.meta.env.VITE_WATCHMODE_API_KEY
 
+	const [chatBox, setChatBox] = useState(null);
 	// added this becuase we are filling the favorites object 
 	const [fav, setFav] = useState("");
 
@@ -30,28 +34,29 @@ export const Profile = () => {
 	// added this for the search functionality
 	const [search, setSearch] = useState("");
 
-	const [episode, setEpisode] = useState("")
-
-
 	// card map use state to override 
 	const [label, setLabel] = useState([])
 
 	const [mapItem, setMapItem] = useState("")
 
 	const matchesSearch = (showList, search) => {
+		console.log("matchesSearch")
 		return showList.title.toLowerCase().includes(search.toLowerCase());
 	};
 
 	const showListFetch = () => {
 		fetch(watchModeBase+"/list-titles/?apiKey="+watchModeApi+"&source_ids=203,57")
 			.then((resp) => {
-				return resp.json()
+				if (resp.ok == false){
+					return shows
+				} else {					
+					return resp.json()
+				}
 			})
 
 			.then((data) => {
 				const arrayofMedia = data.titles
 				const onlyShows = arrayofMedia.filter((show) => show.type == "tv_series")
-				console.log(onlyShows, "HEREEEEEEEE")
 				setLabel(onlyShows)
 				setMapItem("show")
 			})
@@ -64,7 +69,7 @@ export const Profile = () => {
 	//  meaning that only the title searched will be mapped.
 
 
-	const filteredShows = mapItem == "show" ? label.filter(
+	const filteredShows = mapItem == "show" && label.length > 0 ? label.filter(
 		(show) => {
 			const showTitleLower = show.title.toLowerCase()
 			const searchLower = search.toLowerCase()
@@ -140,7 +145,11 @@ export const Profile = () => {
 	const getSeasons=(id) => {
 		fetch(watchModeBase+"/title/"+ `${id}`+ "/seasons/?apiKey=" + watchModeApi)
 			.then((resp)=> {
-				return resp.json()
+				if (resp.ok == false){
+					return season
+				} else {					
+					return resp.json()
+				}
 			})
 
 			.then((data)=> {
@@ -151,9 +160,9 @@ export const Profile = () => {
 	}
 
 
-	// below wokring on the code to render the episode list of the selected show season
+	// below working on the code to render the episode list of the selected show season
         const getEpisodes = () => {
-        	fetch(watchModeBase+ "/title/3197275/episodes/?apiKey="+ watchModeApi)
+        	fetch(watchModeBase+ "/title/3196837/episodes/?apiKey="+ watchModeApi)
             .then((resp) => {
                 return resp.json()
             })
@@ -166,50 +175,44 @@ export const Profile = () => {
 	useEffect(() => {
 		getFavorites()
 		showListFetch()
-		getEpisodes()
 	}, [])
 
 
 	return (
 		
-		<div style={{ backgroundColor: '#B08EF3', padding: '1rem' }} className="vh-100">
+		<div style={{ backgroundColor: '#B08EF3' }} className="container-fluid">
 		
-			<p className="lead">
-				{/* <h1>Welcome, ${user}</h1>  will need to come back and update so it is personalized */}
-			</p>
-			
-			<div className="d-inline-flex col-6"> 
-					<img src= {profileImageUrl} className="img-fluid rounded-circle mb-4" width="200px" alt="User-Image" />
-			</div>
-			<div className="d-inline-flex col-12">
-				<div>
-					<h5 className="text-center">Favorite List</h5>
-					{fav.length > 0 ?
-						fav.map((show) => {
-							return (
-								<div className="text-start">
-									<ul className="list-unstyled display-8">
-										<li className="m-1">
-											<img src={star} className="m-3" width="20" height="20" alt="Star-Image" />
-											{show.showTitle}
-										</li>
-									</ul>
-								</div>
-							)
-						}) :
-						<p className=" small text-black-50">please select your favorite shows</p>}
+			<div className="row" height="800px">
+				<div className="col-2">
+					<div className=" d-inline-flex "> 
+							<img src= {profileImageUrl} className="img-fluid rounded-circle mb-4" width="200px" alt="User-Image" />
+					</div>
+					<div>
+						<h5 className=" text-center">Favorite List</h5>
+						{fav.length > 0 ?
+							fav.map((show) => {
+								return (
+									<div className="text-start">
+										<ul className="list-unstyled display-8">
+											<li className="m-1">
+												<img src={star} className="m-3" width="20" height="20" alt="Star-Image" />
+												{show.showTitle}
+											</li>
+										</ul>
+									</div>
+								)
+							}) :
+							<p className=" small text-black-50">please select your favorite shows</p>}
+					</div>
 				</div>
-
-
-				<div className="text-center col-8 mb-5">
+				<div className="text-center col-8 align-self-end mt-5">
 					<div className="">
-						<img src={profilehero} className="img-fluid p-4" width="200"/>
+						<img src={profilehero} className="img-fluid mb-5" width="100"/>
 					</div>
 					<div className="">
-						<h2 className="text-center"> What Are You Watching?</h2>
+						<h2 className="text-center mb-3"> What Are You Watching?</h2>
 						{/* search bar for shows */}
-						<div className="mx-auto col-4">
-							<form className="text-center d-flex" role="search">
+							<form className="text-center d-flex mx-auto col-6" role="search">
 								<input
 									className="form-control me-2"
 									type="search"
@@ -217,23 +220,26 @@ export const Profile = () => {
 									aria-label="Search"
 									value={search}
 									onChange={(e) => {
-									// setLabel(showList)	
-									setSearch(e.target.value)}
-							}
-								/>
-							
-								{/* <button className="btn btn-outline-primary" type="submit">
-									Search
-								</button> */}
+										// setLabel(showList)	
+										setSearch(e.target.value)}
+									}
+									/>
 							</form>
+					</div>
+				</div>
+			</div>
+				<div className="row">
+						<div className="row p-5">
 							{label.length === 0 ?
 							  "Search Not Found. Please Try again.":
-								mapItem == "show" ? 
-								filteredShows.map((show) => {
-									return (
-										<div className=" text-start">
+							  mapItem == "show" ? 
+							  (filteredShows.map((show) => {
+								  return (
+									  <div className="text-center col-2" width="">
 											<ul className="list-unstyled">
-												<li onClick={() => (getSeasons(show.id))} className="m-1">
+												<li className="m-1"
+												onClick={() =>
+													(getSeasons(show.id))}>
 													<Card
 													title={show.title} 
 													id={show.id}
@@ -242,49 +248,62 @@ export const Profile = () => {
 											</ul>
 										</div>
 									)
-								})
-								:
-								 label.map((season) => {
-								  return (
-									  <div className="text-start text-center">
-											<ul class="list-group d-flex align-items-center ">
-												<li class="list-group-item col-4">{season.name}</li>
-											</ul>
-										</div>
-									)
-								})}
-							</div>
-						</div>
-						<div>
-							{seasons.length === 0 ?
-							  "Seasons not found. Please Try again.":
-							  seasons.map((season) => {
-								  return (
-									  <div className="text-start text-center">
-											<ul class="list-group d-flex align-items-center ">
-												<li class="list-group-item col-4">
-												<button onClick="">Go Back</button>
-												{season.title}</li>
-												<li class="list-group-item col-4">{season.name}</li>
-											</ul>
-										</div>
-									)
-								})}
+								}))
+								: (
+									<>
+									{/* ✅ BACK BUTTON outside map */}
+												<div className="text-start text-center">
+												<ul className="list-group d-flex align-items-center">
+													<li
+													className="list-group-item col-4"
+													onClick={() => {
+														showListFetch();
+													
+													}}
+													style={{
+														cursor: "pointer",
+														fontWeight: "bold",
+														backgroundColor: "#f0f0f0",
+													}}
+													>
+													⬅ BACK TO SHOWS
+													</li>
+												</ul>
+												</div>
 
-					</div>
+								{label.map((season) => {
+									return (
+										<div className="text-start text-center">
+								
+											<ul className="list-group d-flex align-items-center ">
+												<li class="list-group-item col-4"
+												onClick={()=>{console.log("clicked")
+														setChatBox({title: season.name, id: season.id});
+													}
+												}
+													style={{ cursor: "pointer" }}
+												>{season.name}</li>
+											</ul>
+
+										</div>
+					
+									);
+								
+									})}
+								</>
+							)}
+							</div>
+				
+						<div>
+											{chatBox && 
+											
+											(<Chatdemo
+											title={chatBox.title}
+											id={`${chatBox.id}`}/>
+											)}
+
+						</div>
 				</div>
-			</div>
 		</div>
 	);
 };
-
-
-
-
-
-
-
-
-
-
-
