@@ -21,7 +21,7 @@ export const Profile = () => {
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
 	const watchModeApi = import.meta.env.VITE_WATCHMODE_API_KEY
 
-	const [chatBox, setChatBox] = useState("")
+	const [chatBox, setChatBox] = useState(null);
 	// added this becuase we are filling the favorites object 
 	const [fav, setFav] = useState("");
 
@@ -269,11 +269,28 @@ export const Profile = () => {
 							</div>
 						</div>
 						<div>
-					
-								{chatBox && <Chatdemo
+								{chatBox && (
+										<>
+										<button 
+											onClick={() => setChatBox(null)} 
+											style={{
+											marginBottom: "8px",
+											padding: "6px 12px",
+											cursor: "pointer",
+											backgroundColor: "#ff4d4f",
+											color: "white",
+											border: "none",
+											borderRadius: "4px"
+											}}
+										>
+											Exit Chat
+										</button>								
+								<Chatdemo
 											title={chatBox.title}
-												id={`${chatBox.id}`}/>}
-
+												id={`${chatBox.id}`}/>
+												
+										</>
+									)}
 					</div>
 				</div>
 		
