@@ -21,7 +21,7 @@ export const Profile = () => {
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
 	const watchModeApi = import.meta.env.VITE_WATCHMODE_API_KEY
 
-	const [chatBox, setChatBox] = useState("")
+	const [chatBox, setChatBox] = useState(null)
 	// added this becuase we are filling the favorites object 
 	const [fav, setFav] = useState("");
 
@@ -160,18 +160,6 @@ export const Profile = () => {
 			})
 	}
 
-
-	// below wokring on the code to render the episode list of the selected show season
-    //     const getEpisodes = () => {
-    //     	fetch(watchModeBase+ "/title/3197275/episodes/?apiKey="+ watchModeApi)
-    //         .then((resp) => {
-    //             return resp.json()
-    //         })
-    //         .then((data) => {
-    //             console.log("episode list is here",data)
-    //         })
-			
-	// }
 
 	useEffect(() => {
 		getFavorites()
