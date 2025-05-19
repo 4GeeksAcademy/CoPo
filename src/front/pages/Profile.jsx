@@ -21,7 +21,7 @@ export const Profile = () => {
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
 	const watchModeApi = import.meta.env.VITE_WATCHMODE_API_KEY
 
-	const [chatBox, setChatBox] = useState(null);
+	const [chatBox, setChatBox] = useState("")
 	// added this becuase we are filling the favorites object 
 	const [fav, setFav] = useState("");
 
@@ -161,17 +161,17 @@ export const Profile = () => {
 	}
 
 
-	// below working on the code to render the episode list of the selected show season
-        const getEpisodes = () => {
-        	fetch(watchModeBase+ "/title/3196837/episodes/?apiKey="+ watchModeApi)
-            .then((resp) => {
-                return resp.json()
-            })
-            .then((data) => {
-                console.log("episode list is here",data)
-            })
+	// below wokring on the code to render the episode list of the selected show season
+    //     const getEpisodes = () => {
+    //     	fetch(watchModeBase+ "/title/3197275/episodes/?apiKey="+ watchModeApi)
+    //         .then((resp) => {
+    //             return resp.json()
+    //         })
+    //         .then((data) => {
+    //             console.log("episode list is here",data)
+    //         })
 			
-	}
+	// }
 
 	useEffect(() => {
 		getFavorites()
@@ -181,39 +181,44 @@ export const Profile = () => {
 
 	return (
 		
-		<div style={{ backgroundColor: '#B08EF3' }} className="container-fluid">
+		<div style={{ backgroundColor: '#B08EF3', padding: '1rem' }} className="vh-100">
 		
-			<div className="row" height="800px">
-				<div className="col-2">
-					<div className=" d-inline-flex "> 
-							<img src= {profileImageUrl} className="img-fluid rounded-circle mb-4" width="200px" alt="User-Image" />
-					</div>
-					<div>
-						<h5 className=" text-center">Favorite List</h5>
-						{fav.length > 0 ?
-							fav.map((show) => {
-								return (
-									<div className="text-start">
-										<ul className="list-unstyled display-8">
-											<li className="m-1">
-												<img src={star} className="m-3" width="20" height="20" alt="Star-Image" />
-												{show.showTitle}
-											</li>
-										</ul>
-									</div>
-								)
-							}) :
-							<p className=" small text-black-50">please select your favorite shows</p>}
-					</div>
+			<p className="lead">
+				{/* <h1>Welcome, ${user}</h1>  will need to come back and update so it is personalized */}
+			</p>
+			
+			<div className="d-inline-flex col-6"> 
+					<img src= {profileImageUrl} className="img-fluid rounded-circle mb-4" width="200px" alt="User-Image" />
+			</div>
+			<div className="d-inline-flex col-12">
+				<div>
+					<h5 className="text-center">Favorite List</h5>
+					{fav.length > 0 ?
+						fav.map((show) => {
+							return (
+								<div className="text-start">
+									<ul className="list-unstyled display-8">
+										<li className="m-1">
+											<img src={star} className="m-3" width="20" height="20" alt="Star-Image" />
+											{show.showTitle}
+										</li>
+									</ul>
+								</div>
+							)
+						}) :
+						<p className=" small text-black-50">please select your favorite shows</p>}
 				</div>
-				<div className="text-center col-8 align-self-end mt-5">
+
+
+				<div className="text-center col-8 mb-5">
 					<div className="">
-						<img src={profilehero} className="img-fluid mb-5" width="100"/>
+						<img src={profilehero} className="img-fluid p-4" width="200"/>
 					</div>
 					<div className="">
-						<h2 className="text-center mb-3"> What Are You Watching?</h2>
+						<h2 className="text-center"> What Are You Watching?</h2>
 						{/* search bar for shows */}
-							<form className="text-center d-flex mx-auto col-6" role="search">
+						<div className="mx-auto col-4">
+							<form className="text-center d-flex" role="search">
 								<input
 									className="form-control me-2"
 									type="search"
@@ -221,22 +226,21 @@ export const Profile = () => {
 									aria-label="Search"
 									value={search}
 									onChange={(e) => {
-										// setLabel(showList)	
-										setSearch(e.target.value)}
-									}
-									/>
+									// setLabel(showList)	
+									setSearch(e.target.value)}
+							}
+								/>
+							
+								{/* <button className="btn btn-outline-primary" type="submit">
+									Search
+								</button> */}
 							</form>
-					</div>
-				</div>
-			</div>
-				<div className="row">
-						<div className="row p-5">
 							{label.length === 0 ?
 							  "Search Not Found. Please Try again.":
-							  mapItem == "show" ? 
-							  filteredShows.map((show) => {
-								  return (
-									  <div className="text-center col-2" width="">
+								mapItem == "show" ? 
+								filteredShows.map((show) => {
+									return (
+										<div className=" text-start">
 											<ul className="list-unstyled">
 												<li className="m-1"
 												onClick={() =>
@@ -251,9 +255,9 @@ export const Profile = () => {
 									)
 								})
 								:
-								label.map((season) => {
-									return (
-										<div className="text-start text-center">
+								 label.map((season) => {
+								  return (
+									  <div className="text-start text-center">
 											<ul class="list-group d-flex align-items-center ">
 												<li class="list-group-item col-4"
 												onClick={()=>{ console.log("clicked")
@@ -269,30 +273,14 @@ export const Profile = () => {
 							</div>
 						</div>
 						<div>
-								{chatBox && (
-										<>
-										<button 
-											onClick={() => setChatBox(null)} 
-											style={{
-											marginBottom: "8px",
-											padding: "6px 12px",
-											cursor: "pointer",
-											backgroundColor: "#ff4d4f",
-											color: "white",
-											border: "none",
-											borderRadius: "4px"
-											}}
-										>
-											Exit Chat
-										</button>								
-								<Chatdemo
+					
+								{chatBox && <Chatdemo
 											title={chatBox.title}
-												id={`${chatBox.id}`}/>
-												
-										</>
-									)}
+												id={`${chatBox.id}`}/>}
+
 					</div>
 				</div>
-		
+			</div>
+		</div>
 	);
 };
