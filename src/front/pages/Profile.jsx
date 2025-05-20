@@ -21,7 +21,7 @@ export const Profile = () => {
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
 	const watchModeApi = import.meta.env.VITE_WATCHMODE_API_KEY
 
-	const [chatBox, setChatBox] = useState(null);
+	const [chatBox, setChatBox] = useState(null)
 	// added this becuase we are filling the favorites object 
 	const [fav, setFav] = useState("");
 
@@ -57,6 +57,7 @@ export const Profile = () => {
 			.then((data) => {
 				const arrayofMedia = data.titles
 				const onlyShows = arrayofMedia.filter((show) => show.type == "tv_series")
+				console.log(onlyShows, "HEREEEEEEEE")
 				setLabel(onlyShows)
 				setMapItem("show")
 			})
@@ -160,26 +161,13 @@ export const Profile = () => {
 	}
 
 
-	// below working on the code to render the episode list of the selected show season
-        const getEpisodes = () => {
-        	fetch(watchModeBase+ "/title/3196837/episodes/?apiKey="+ watchModeApi)
-            .then((resp) => {
-                return resp.json()
-            })
-            .then((data) => {
-                console.log("episode list is here",data)
-            })
-			
-	}
-
 	useEffect(() => {
 		getFavorites()
 		showListFetch()
 	}, [])
 
 
-	return (
-		
+return (
 		<div style={{ backgroundColor: '#B08EF3' }} className="container-fluid">
 		
 			<div className="row" height="800px">
