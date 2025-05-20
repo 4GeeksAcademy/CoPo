@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link, useParams } from "react-router-dom";
+import cute from "../assets/img/cute.png";
 
 
 export const HomePage = () => {
@@ -19,14 +20,24 @@ export const HomePage = () => {
                     </Link>
                 </h6>
             </div>
-            <h1 className="fw-bold" style={{ marginLeft: '50px' }}>
-                Welcome To...
-            </h1>
-            <div className= "col-5 offset-3 text-center">
-                <h1 className="text-end me-auto fw-bold">Couch Potato</h1>
+            <div className="d-flex justify-content-start align-items-center mt-5">
+                <h1 className="fw-bold display-3" style={{ marginLeft: '80px' }}>
+                     Welcome To...
+                </h1>
             </div>
-            <div className="row">
-                <h5 className="text-center">Reliving the good old shows is fun, but sharing the laughs, drama, and plot
+            <div className="d-flex justify-content-center align-items-center">
+            <img
+                src={cute}
+                className="img-fluid"
+                width="200px"
+                alt="User-Image"
+            />
+            <h1 className="fw-bold mb-0 align-self-center display-3">
+                Couch Potato
+            </h1>
+            </div>
+            <div>
+                <h5 className="text-center mt-5">Reliving the good old shows is fun, but sharing the laughs, drama, and plot
                     twits make it unforgettable.
                 </h5>
             </div>
