@@ -187,12 +187,17 @@ return (
 											<li className="m-1">
 												<img src={star} className="m-3" width="20" height="20" alt="Star-Image" />
 												{show.showTitle}
+												<Card
+													title={show.title} 
+													id={show.id}
+													/>
 											</li>
 										</ul>
 									</div>
 								)
 							}) :
 							<p className=" small text-black-50">please select your favorite shows</p>}
+
 					</div>
 				</div>
 				<div className="text-center col-8 align-self-end mt-5">

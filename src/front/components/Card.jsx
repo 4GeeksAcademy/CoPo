@@ -20,7 +20,7 @@ export const Card = ({ title, id, end }) => {
               className="btn btn-success"
               type="button"
               onClick={() =>
-                dispatch({ type: "set_Fav", payload: show.title })
+                dispatch({ type: "set_Fav", payload: { showTitle: show.title } })
               }
             >
               {" "}
