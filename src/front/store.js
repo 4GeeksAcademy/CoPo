@@ -12,7 +12,8 @@ export const initialStore=()=>{
         title: "Do my homework",
         background: null,
       }
-    ]
+    ],
+    favorites: null,
   }
 }
 
@@ -34,6 +35,11 @@ export default function storeReducer(store, action = {}) {
       };
     default:
       throw Error('Unknown action.');
+    case 'set_favs': 
+      return {
+        ...store,
+        favorites: action.payload
+      }
   }    
 }
 
@@ -41,23 +47,23 @@ export default function storeReducer(store, action = {}) {
 // action = a message you send to the librarian telling them what to do
 
 
-function getFavorites(state, action) {
-  switch (action.type) {
-    case "my-likes":
-      return {
-        ...state,
-        favorites: [...state.favorites, action.payload],
-      };
-    // other cases...
-    default:
-      return state;
-  }
-}
-if(action.type == "my-likes"){
-  if(store?.favorites.includes(action.payload)){return store}
-  return{
-    ...store,
-    favorites: [...store.getFavorites, action.payload]
-  }    
-}
-// lines 44 to 62 need to be fixed 
+// function setFav(store, action) {
+//   switch (action.type) {
+//     case "my-likes":
+//       return {
+//         ...state,
+//         favorites: [...store.favorites, action.payload],
+//       };
+//     // other cases...
+//     default:
+//       return state;
+//   }
+// }
+
+
+//  if(action.type == "my-likes"){
+//   if(store?.favorites.includes(action.payload)){return store}
+//   return{
+//     ...store,
+//     favorites: [...store.favorites,action.payload]
+//   }

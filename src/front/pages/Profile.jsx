@@ -15,8 +15,8 @@ import { season } from "../assets/Data/Season.js";
 
 export const Profile = () => {
 
-	const { store, dispatch } = useGlobalReducer(getFavorites, {favorites: [] } )
-													// ^__ need to fix this still
+	const { store, dispatch } = useGlobalReducer()
+												
 	const backendUrl = import.meta.env.VITE_BACKEND_URL
 	const apiKey = import.meta.env.VITE_API_KEY
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL

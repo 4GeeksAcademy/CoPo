@@ -16,8 +16,7 @@ export const Card = ({title,id,end}) => {
                        payload: is saying to add this SHOW-TITLE to my favorites*/}
                         <button
                       onClick={() =>
-                        dispatch({ type: "my-likes", payload: show.title }) 
-                                                            // show.title is in profile.jsx line 250
+                        dispatch({ type: "set_Fav", payload: show.title }) 
                       }
                     >
                       {" "}
