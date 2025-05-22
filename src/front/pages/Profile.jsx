@@ -262,20 +262,24 @@ return (
 								{label.map((season) => {
 									return (
 										<div className="text-start text-center">
-								
+										
 											<ul className="list-group d-flex align-items-center ">
-												<li class="list-group-item col-4"
-												onClick={()=>{console.log("clicked")
+												<li class="list-group-item col-4">
+												<span className="h3">
+													{season.name}
+												</span>
+												<span className="d-flex justify-content-center align-items-center p-2">
+
+												<button className="btn btn-primary btn-xs" onClick={()=>{console.log("clicked")
 														setChatBox({title: season.name, id: season.id});
-													}
-												}
-													style={{ cursor: "pointer" }}
-												>{season.name}</li>
+													}}style={{ cursor: "pointer" }}>Join</button>
+												</span>
+												</li>
 											</ul>
 
 										</div>
 					
-									);
+									);git 
 								
 									})}
 								</>
