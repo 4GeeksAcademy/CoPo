@@ -1,17 +1,15 @@
-export const initialStore=()=>{
-  return{
-    favorites: []
-  }
-}
-
-// state = your notebook (it holds your favorites list)
-// action = a message you send to the librarian telling them what to do
- 
- if(action.type == "set_Fav"){
-  // if(store?.favorites.includes(action.payload)){return store}
-  return{
-    ...store,
-    favorites: [...store.favorites,action.payload]
+export const initialStore = () => {
+  return {
+    favorites: [],
+  };
+};
+export default function storeReducer(store, action = {}) {
+  if (action.type == "set_Fav") {
+    // if(store?.favorites.includes(action.payload)){return store}
+    return {
+      ...store,
+      favorites: [...store.favorites, action.payload],
+    };
   }
 }
 
@@ -21,4 +19,7 @@ export const initialStore=()=>{
 //     favorites: store.favorites.filter((item)=> item != action.payload)
 //   }
 //  }
-//        ^--this is the remove feature 
+//        ^--this is the remove feature
+
+// state = your notebook (it holds your favorites list)
+// action = a message you send to the librarian telling them what to do

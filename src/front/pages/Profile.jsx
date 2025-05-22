@@ -196,7 +196,7 @@ return (
 									</div>
 								)
 							}) :
-							<p className=" small text-black-50">please select your favorite shows</p>}
+							<p className="small text-black-50">please select your favorite shows</p>}
 
 					</div>
 				</div>
