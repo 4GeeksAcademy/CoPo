@@ -83,7 +83,7 @@ export const Signup = () => {
 	return (
 		<div className="vh-100 text-center" style={{ backgroundColor: '#B08EF3', padding: '1rem' }}>
 			<h1 className="display-4 fw-bold">Couch Potato </h1>
-			<form className="mx-auto" style={{ maxWidth: '400px' }}>
+			<form className="mx-auto" style={{ maxWidth: '300px' }}>
 			<div className="mb-3">
 				<h2 className="fw-bold p-3">Sign up !</h2>
 				<label className="p-2">Enter Your Name</label>
@@ -110,7 +110,7 @@ export const Signup = () => {
 			{/* <div className="alert alert-info"> */}
 			<div>
 			{/* <button onClick={() => showList()}>Show list button</button>  */} {/* <--this button needs to be added in the 'Profile Page' */}
-				<button className="btn fs-6 text-white" onClick={()=>signup()}>
+				<button className="btn fs-5 text-white" onClick={()=>signup()}>
 					Create Account
 				</button>
 				

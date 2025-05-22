@@ -34,10 +34,10 @@ export const LoginPage = () => {
         }, [])
 
     return(
-        <div className= "text-center">
+        <div className="vh-100 text-center" style={{ backgroundColor: '#B08EF3', padding: '1rem' }}>
             <div>
-                <h1 className="main">Welcome to Couch Potato!</h1>
-                <h3 className="p-3">Login to your Account </h3>
+                <h1 className="main display-4 fw-bold">Couch Potato</h1>
+                <h3 className="p-3">Sign in to your Account </h3>
                 <label className="p-3">Enter your Email</label>
                 <input onChange={(e) => setEmail(e.target.value)} value={email} type="text" placeholder="email" />
             </div>

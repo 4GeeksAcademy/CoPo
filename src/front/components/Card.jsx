@@ -1,5 +1,5 @@
 // export is to be able to use in other components 
-export const Card = ({title,id,end}) => {
+export const Card = ({title,id,end, onFavorite, isFavorited}) => {
                     //the 3 variables used for making the tags dynamic 
     return (
         <div>
@@ -9,7 +9,17 @@ export const Card = ({title,id,end}) => {
                         <div className="card-body">
                         <p className="card-title">{title}</p>
                         <p className="card-text">{}</p>
-                        <a href="#" class="btn btn-primary">{end}</a>
+                        <a href="#" class="btn btn-primary">{end}Seasons</a>
+                        {/* ⭐ Favorite Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // prevent parent click (like getSeasons)
+              onFavorite();
+            }}
+            className="d-flex btn btn-sm btn-outline-warning mt-2 ms-2"
+          >
+            {isFavorited ? "★ Favorited" : "☆ Favorite"}
+          </button>
                     </div>
             </div>
         </div>

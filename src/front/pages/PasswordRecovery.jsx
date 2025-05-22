@@ -42,12 +42,12 @@ export const PasswordRecovery = () => {
 
 return (
     <div className= "text-center" >
-        <h1>Forgot Password</h1>
+        <h1 className="display-4 fw-bold">Forgot Password</h1>
         <br/>
         <p>Please enter your email and new password. If an account exists with the email you provided, 
             your password will be reset successfully.
         </p>
-        <div className="border p-5 mx-auto w-50">
+        <div className="border p-5 mx-auto w-50" style={{ backgroundColor: '#B08EF3', padding: '1rem' }}>
             <div >
                 <input onChange={(e) => setEmail(e.target.value)} value={email} type="text" placeholder="Enter Your Email" />
             </div>
