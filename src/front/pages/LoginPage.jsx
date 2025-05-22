@@ -46,7 +46,10 @@ export const LoginPage = () => {
                 <label className="p-3">Enter your Password </label>
                 <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" placeholder="password" />
                 <button className="m-2"onClick={login}>
+                    <Link to="/profile">
                     Login
+                    </Link>
+            
                 </button>
                 <div>
 					<Link to="/resetpassword">Forgot Password?</Link>
