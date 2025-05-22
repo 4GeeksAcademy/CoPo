@@ -12,7 +12,7 @@ export const Navbar = () => {
 					<h3 style={{ color: 'white' }}>COUCH POTATO</h3>
 				</div>
 				<div className="col-2">
-					<Link to="/demo">
+					<Link to="/">
 						<p className="">Log out</p>
 					</Link>
 					
