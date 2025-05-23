@@ -1,6 +1,9 @@
 export const initialStore = () => {
   return {
     favorites: [],
+      // [] <-- indicating for an array of favorites
+    user: {},
+    // {} <-- indicating for only one user at a time
   };
 };
 export default function storeReducer(store, action = {}) {
@@ -9,6 +12,14 @@ export default function storeReducer(store, action = {}) {
     return {
       ...store,
       favorites: [...store.favorites, action.payload],
+    };
+  }
+  if (action.type == "set_user") {
+    const {user} = action.payload
+    console.log(user, typeof user, "here is the stores payload!!!")
+    return {
+      ...store,
+      user: "test",
     };
   }
 }

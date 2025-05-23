@@ -43,8 +43,11 @@ def login():
     email = data.get("email")
     password = data.get("password")
     find_user = User.query.filter_by(email=email).first()
+    if not find_user: 
+        return jsonify({"message":"No Email Found!!"}), 500
 
-    user = {"name": find_user.name, "email": find_user.email}
+
+    user = {"id": find_user.id, "name": find_user.name, "email": find_user.email}
     print(find_user.password, "where is my user?!!??!?")
 
     # <--this will return a true or false about password that was entered-->

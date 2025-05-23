@@ -16,6 +16,9 @@ import { season } from "../assets/Data/Season.js";
 export const Profile = () => {
 
 	const { store, dispatch } = useGlobalReducer()
+	const loggedInUser = localStorage.getItem("user")
+	const user = JSON.parse(loggedInUser)
+	console.log(user,"this is my store")
 												
 	const backendUrl = import.meta.env.VITE_BACKEND_URL
 	const apiKey = import.meta.env.VITE_API_KEY
@@ -86,26 +89,6 @@ export const Profile = () => {
 	const [seasons, setSeasons] = useState("");
 
 
-	const post_favorites = () => {
-		const option = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				"user": "Brandon-Ray",
-			})
-		}
-		fetch(backendUrl  + "/api/post_favorites", option)
-			.then((resp) => {
-				return resp.json()
-			})
-
-			.then((data) => {
-				console.log(data)
-			})
-	}
-
 	const post_show = () => {
 		const option = {
 			method: "POST",
@@ -145,22 +128,7 @@ export const Profile = () => {
 	// adding to pull show seasons from api
 
 
-	const getSeasons=(id) => {
-		fetch(watchModeBase+"/title/"+ `${id}`+ "/seasons/?apiKey=" + watchModeApi)
-			.then((resp)=> {
-				if (resp.ok == false){
-					return season
-				} else {					
-					return resp.json()
-				}
-			})
-
-			.then((data)=> {
-				setLabel(data)
-				setMapItem("season")
-				console.log("SEASONSSSSSSS",data)
-			})
-	}
+	
 
 
 	useEffect(() => {
@@ -181,16 +149,14 @@ return (
 						<h5 className=" text-center">Favorite List</h5>
 						{fav.length > 0 ?
 							fav.map((show) => {
+								console.log(show, "heres my favorite show")
 								return (
 									<div className="text-start">
 										<ul className="list-unstyled display-8">
 											<li className="m-1">
 												<img src={star} className="m-3" width="20" height="20" alt="Star-Image" />
-												{show.showTitle}
-												<Card
-													title={show.title} 
-													id={show.id}
-													/>
+												{show.show}
+												
 											</li>
 										</ul>
 									</div>
@@ -233,11 +199,11 @@ return (
 									  <div className="text-center col-2" width="">
 											<ul className="list-unstyled">
 												<li className="m-1"
-												onClick={() =>
-													(getSeasons(show.id))}>
+												
+												>
 													<Card
 													title={show.title} 
-													id={show.id}
+													showId={show.id}
 													/>
 												</li>
 											</ul>
