@@ -84,6 +84,10 @@ export const Profile = () => {
 
 	) : [];
 
+	const filteredFavs = fav.filter((favData)=>favData.show && favData.show.length>0)
+
+
+
 
 	// added this becuase we want to render show season list
 	const [seasons, setSeasons] = useState("");
@@ -148,7 +152,7 @@ return (
 					<div>
 						<h5 className=" text-center">Favorite List</h5>
 						{fav.length > 0 ?
-							fav.map((show) => {
+							filteredFavs.map((show) => {
 								// console.log(show, "heres my favorite show")
 								return (
 									<div className="text-start">
