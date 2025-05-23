@@ -21,6 +21,9 @@ try:
         showTitle = request.json.get('showTitle')
         favorites_id = request.json.get('favorites_id')
 
+        find_show = Show.query.filter_by(showTitle=showTitle).first()
+        if find_show: 
+            return jsonify({"message":"Show already added!!"}), 500
         new_show = Show(
 
             showTitle=showTitle,
@@ -31,7 +34,7 @@ try:
         db.session.add(new_show)
         db.session.commit()
 
-        return jsonify("SHOW CREATED"), 200
+        return jsonify(new_show.serialize()), 200
 
 except:
     print("Error has occured. Please try to favorite show again.")
@@ -43,8 +46,11 @@ def login():
     email = data.get("email")
     password = data.get("password")
     find_user = User.query.filter_by(email=email).first()
+    if not find_user: 
+        return jsonify({"message":"No Email Found!!"}), 500
 
-    user = {"name": find_user.name, "email": find_user.email}
+
+    user = {"id": find_user.id, "name": find_user.name, "email": find_user.email}
     print(find_user.password, "where is my user?!!??!?")
 
     # <--this will return a true or false about password that was entered-->

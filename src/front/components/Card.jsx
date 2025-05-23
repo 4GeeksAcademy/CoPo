@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
+import { season } from "../assets/Data/Season.js";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 // export is to be able to use in other components 
-export const Card = ({ title, showId, fav, setFav }) => {
+export const Card = ({ title, showId, fav, setFav, setLabel, setMapItem }) => {
   const { store, dispatch } = useGlobalReducer()
   const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
+  const watchModeApi = import.meta.env.VITE_WATCHMODE_API_KEY
+
 
   const loggedInUser = localStorage.getItem("user")
   const user = JSON.parse(loggedInUser)
@@ -82,7 +86,7 @@ export const Card = ({ title, showId, fav, setFav }) => {
     return (
         <div>
             <div className="w-100 card" >
-                <img src={`https://cdn.watchmode.com/posters/0${id}_poster_w185.jpg`} class="card-img-top" alt="..."/>
+                <img src={`https://cdn.watchmode.com/posters/0${showId}_poster_w185.jpg`} class="card-img-top" alt="..."/>
                 {/*can also add extra variable for the image source  */}
                         <div className="card-body">
                         <p className="card-title">{title}</p>
@@ -115,3 +119,8 @@ export const Card = ({ title, showId, fav, setFav }) => {
     </div>
   )
 }
+
+
+{/* dispatch: is like calling a helper and notifying of an update/add on 
+                       type: is saying put whatever is in here into my favorites box 
+                       payload: is saying to add this SHOW-TITLE to my favorites*/}

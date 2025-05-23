@@ -1,4 +1,4 @@
-import React ,{ useEffect, useState } from "react";
+import React ,{ useEffect, useReducer, useState } from "react";
 import profileImageUrl from "../assets/img/roundpicture.png"; 
 import star from "../assets/img/star.png";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
@@ -16,6 +16,10 @@ import { season } from "../assets/Data/Season.js";
 export const Profile = () => {
 
 	const { store, dispatch } = useGlobalReducer()
+	const loggedInUser = localStorage.getItem("user")
+	const user = JSON.parse(loggedInUser)
+	console.log(user,"this is my store")
+												
 	const backendUrl = import.meta.env.VITE_BACKEND_URL
 	const apiKey = import.meta.env.VITE_API_KEY
 	const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
@@ -23,7 +27,7 @@ export const Profile = () => {
 
 	const [chatBox, setChatBox] = useState(null)
 	// added this becuase we are filling the favorites object 
-	const [fav, setFav] = useState("");
+	const [fav, setFav] = useState([]);
 
 	// added this in case it is needed to map a list
 	const favoritedShow = []; 
@@ -61,6 +65,7 @@ export const Profile = () => {
 				setLabel(onlyShows)
 				setMapItem("show")
 			})
+			// conditional that helps when api reached its limit
 			.catch((error) => {
 				console.log(error, "There was an error!!!")
 			})
@@ -83,26 +88,6 @@ export const Profile = () => {
 	// added this becuase we want to render show season list
 	const [seasons, setSeasons] = useState("");
 
-
-	const post_favorites = () => {
-		const option = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				"user": "Brandon-Ray",
-			})
-		}
-		fetch(backendUrl  + "/api/post_favorites", option)
-			.then((resp) => {
-				return resp.json()
-			})
-
-			.then((data) => {
-				console.log(data)
-			})
-	}
 
 	const post_show = () => {
 		const option = {
@@ -143,22 +128,7 @@ export const Profile = () => {
 	// adding to pull show seasons from api
 
 
-	const getSeasons=(id) => {
-		fetch(watchModeBase+"/title/"+ `${id}`+ "/seasons/?apiKey=" + watchModeApi)
-			.then((resp)=> {
-				if (resp.ok == false){
-					return season
-				} else {					
-					return resp.json()
-				}
-			})
-
-			.then((data)=> {
-				setLabel(data)
-				setMapItem("season")
-				console.log("SEASONSSSSSSS",data)
-			})
-	}
+	
 
 
 	useEffect(() => {
@@ -166,7 +136,7 @@ export const Profile = () => {
 		showListFetch()
 	}, [])
 
-
+	console.log(fav,"this is my fav")
 return (
 		<div style={{ backgroundColor: '#B08EF3' }} className="container-fluid">
 		
@@ -179,18 +149,21 @@ return (
 						<h5 className=" text-center">Favorite List</h5>
 						{fav.length > 0 ?
 							fav.map((show) => {
+								// console.log(show, "heres my favorite show")
 								return (
 									<div className="text-start">
 										<ul className="list-unstyled display-8">
 											<li className="m-1">
 												<img src={star} className="m-3" width="20" height="20" alt="Star-Image" />
-												{show.showTitle}
+												{show.show}
+												
 											</li>
 										</ul>
 									</div>
 								)
 							}) :
-							<p className=" small text-black-50">please select your favorite shows</p>}
+							<p className="small text-black-50">please select your favorite shows</p>}
+
 					</div>
 				</div>
 				<div className="text-center col-8 align-self-end mt-5">
@@ -226,11 +199,15 @@ return (
 									  <div className="text-center col-2" width="">
 											<ul className="list-unstyled">
 												<li className="m-1"
-												onClick={() =>
-													(getSeasons(show.id))}>
+												
+												>
 													<Card
 													title={show.title} 
-													id={show.id}
+													showId={show.id}
+													fav={fav}
+													setFav={setFav}
+													setLabel={setLabel}
+													setMapItem={setMapItem}
 													/>
 												</li>
 											</ul>
