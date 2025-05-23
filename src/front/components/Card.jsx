@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
+import { season } from "../assets/Data/Season.js";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 // export is to be able to use in other components 
-export const Card = ({ title, showId, fav, setFav }) => {
+export const Card = ({ title, showId, fav, setFav, setLabel, setMapItem }) => {
   const { store, dispatch } = useGlobalReducer()
   const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const watchModeBase = import.meta.env.VITE_WATCHMODE_BASE_URL
+  const watchModeApi = import.meta.env.VITE_WATCHMODE_API_KEY
+
 
   const loggedInUser = localStorage.getItem("user")
   const user = JSON.parse(loggedInUser)
@@ -79,16 +83,15 @@ export const Card = ({ title, showId, fav, setFav }) => {
         console.log("SEASONSSSSSSS", data)
       })
   }
-  //the 3 variables used for making the tags dynamic 
-  return (
-    <div>
-      <div className="w-100 card" >
-        <img src={`https://cdn.watchmode.com/posters/0${showId}_poster_w185.jpg`} class="card-img-top" alt="..." />
-        {/*can also add extra variable for the image source  */}
-        <div className="card-body">
-          <p className="card-title">{title}</p>
-          <p className="card-text">{ }</p>
-          <div className="dropdown d-flex mx-auto ">
+    return (
+        <div>
+            <div className="w-100 card" >
+                <img src={`https://cdn.watchmode.com/posters/0${showId}_poster_w185.jpg`} class="card-img-top" alt="..."/>
+                {/*can also add extra variable for the image source  */}
+                        <div className="card-body">
+                        <p className="card-title">{title}</p>
+                        <p className="card-text">{}</p>
+                        <div className="dropdown d-flex mx-auto ">
             <button
               className="btn btn-primary"
               onClick={() =>

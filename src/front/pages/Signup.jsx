@@ -81,40 +81,42 @@ export const Signup = () => {
 	// }, [])
 
 	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Couch Potato </h1>
-			<div>
-				<h2 className="p-3">Sign up !</h2>
+		<div className="vh-100 text-center" style={{ backgroundColor: '#B08EF3', padding: '1rem' }}>
+			<h1 className="display-4 fw-bold">Couch Potato </h1>
+			<form className="mx-auto" style={{ maxWidth: '300px' }}>
+			<div className="mb-3">
+				<h2 className="fw-bold p-3">Sign up !</h2>
 				<label className="p-2">Enter Your Name</label>
-				<input onChange={(e) => setName(e.target.value)} value={name} type="text" placeholder="full name" />
+				<input className="form-control" onChange={(e) => setName(e.target.value)} value={name} type="text" placeholder="full name" />
 			</div>
-			<div>
+			<div className="mb-3">
 				<label className="p-2">Enter Age</label>
-				<input onChange={(e) => setBirthday(e.target.value)} value={birthday} type="age" placeholder="19" />
+				<input className="form-control" onChange={(e) => setBirthday(e.target.value)} value={birthday} type="age" placeholder="19" />
 			</div>
 			{/* fix 'type' back to date */}
-			<div>
+			<div className="mb-3">
 				<label className="p-2">Enter Email</label>
-				<input onChange={(e) => setEmail(e.target.value)} value={email} type="text" placeholder="johnapple@hotmail.com" />
+				<input className="form-control" onChange={(e) => setEmail(e.target.value)} value={email} type="text" placeholder="johnapple@hotmail.com" />
 			</div>
-			<div>
+			<div className="mb-3">
 				<label className="p-2">Enter Password</label>
-				<input onChange={(e) => setPassword(e.target.value)} value={[password]} type="password" placeholder="" />
+				<input className="form-control" onChange={(e) => setPassword(e.target.value)} value={[password]} type="password" placeholder="" />
 			</div>
+			</form>
       {/* <-- add a button to see what youre typing---> */}
 	  {/* try to see if can add 2nd password input for 'password confirmation' */}
 
 
-			<div className="alert alert-info">
+			{/* <div className="alert alert-info"> */}
 			<div>
 			{/* <button onClick={() => showList()}>Show list button</button>  */} {/* <--this button needs to be added in the 'Profile Page' */}
-				<button onClick={()=>signup()}>
-					Signup
+				<button className="btn fs-5 text-white" onClick={()=>signup()}>
+					Create Account
 				</button>
 				
 				
 				<div>
-					<Link to="/login">Already Have An Account?</Link>
+					<Link to="/login">Sign In</Link>
 				</div>
 				
 			</div>
@@ -126,7 +128,7 @@ export const Signup = () => {
 					</span>
 				)} */}
 			</div>
-		</div>
+		// </div>
 		
 	);
 }; 

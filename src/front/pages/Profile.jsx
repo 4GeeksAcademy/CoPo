@@ -206,6 +206,8 @@ return (
 													showId={show.id}
 													fav={fav}
 													setFav={setFav}
+													setLabel={setLabel}
+													setMapItem={setMapItem}
 													/>
 												</li>
 											</ul>
