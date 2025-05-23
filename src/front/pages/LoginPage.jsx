@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from "react-router-dom";
 
 export const LoginPage = () => {
-
+    const { store, dispatch } = useGlobalReducer()
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
 
@@ -26,7 +26,10 @@ export const LoginPage = () => {
 			})
 
 			.then((data) => {
-				console.log(data)
+				// console.log(data.user, "this is the payload for set user!!")
+                    // dispatch({ type: "set_user", payload: {user: {email: data.user.email}}})
+                const localStorageData = JSON.stringify(data.user)
+                localStorage.setItem("user", localStorageData)
 			})
 	}
 
