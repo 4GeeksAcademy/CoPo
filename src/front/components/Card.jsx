@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 // export is to be able to use in other components 
-export const Card = ({ title, showId, end }) => {
+export const Card = ({ title, showId, fav, setFav }) => {
   const { store, dispatch } = useGlobalReducer()
   const backendUrl = import.meta.env.VITE_BACKEND_URL
 
   const loggedInUser = localStorage.getItem("user")
   const user = JSON.parse(loggedInUser)
-  console.log(user, "this is my store")
+  // console.log(user, "this is my store")
 
   const post_show = (name, favorites) => {
     const option = {
@@ -27,7 +27,15 @@ export const Card = ({ title, showId, end }) => {
       })
 
       .then((data) => {
-        console.log(data, "new show added to favorites")
+        if (data.message = "Show already added!!") {
+          console.log("show already exists")
+        }
+        else {
+          console.log(data.showTitle, "new show added to favorites")
+          const new_fav = { show: data.showTitle }
+          setFav([...fav, new_fav])
+        }
+
       })
   }
   const post_favorites = (user_id) => {
@@ -55,22 +63,22 @@ export const Card = ({ title, showId, end }) => {
       })
   }
 
-  const getSeasons=(id) => {
-      fetch(watchModeBase+"/title/"+ `${id}`+ "/seasons/?apiKey=" + watchModeApi)
-        .then((resp)=> {
-          if (resp.ok == false){
-            return season
-          } else {					
-            return resp.json()
-          }
-        })
-  
-        .then((data)=> {
-          setLabel(data)
-          setMapItem("season")
-          console.log("SEASONSSSSSSS",data)
-        })
-    }
+  const getSeasons = (id) => {
+    fetch(watchModeBase + "/title/" + `${id}` + "/seasons/?apiKey=" + watchModeApi)
+      .then((resp) => {
+        if (resp.ok == false) {
+          return season
+        } else {
+          return resp.json()
+        }
+      })
+
+      .then((data) => {
+        setLabel(data)
+        setMapItem("season")
+        console.log("SEASONSSSSSSS", data)
+      })
+  }
   //the 3 variables used for making the tags dynamic 
   return (
     <div>

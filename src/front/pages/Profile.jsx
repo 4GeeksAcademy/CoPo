@@ -27,7 +27,7 @@ export const Profile = () => {
 
 	const [chatBox, setChatBox] = useState(null)
 	// added this becuase we are filling the favorites object 
-	const [fav, setFav] = useState("");
+	const [fav, setFav] = useState([]);
 
 	// added this in case it is needed to map a list
 	const favoritedShow = []; 
@@ -136,7 +136,7 @@ export const Profile = () => {
 		showListFetch()
 	}, [])
 
-
+	console.log(fav,"this is my fav")
 return (
 		<div style={{ backgroundColor: '#B08EF3' }} className="container-fluid">
 		
@@ -149,7 +149,7 @@ return (
 						<h5 className=" text-center">Favorite List</h5>
 						{fav.length > 0 ?
 							fav.map((show) => {
-								console.log(show, "heres my favorite show")
+								// console.log(show, "heres my favorite show")
 								return (
 									<div className="text-start">
 										<ul className="list-unstyled display-8">
@@ -204,6 +204,8 @@ return (
 													<Card
 													title={show.title} 
 													showId={show.id}
+													fav={fav}
+													setFav={setFav}
 													/>
 												</li>
 											</ul>
